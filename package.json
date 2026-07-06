@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "SDK para interactuar con la api de gestor de proyectos",
   "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "module": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "scripts": {
     "test": "vitest --reporter=verbose",
