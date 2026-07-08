@@ -11,7 +11,13 @@ export interface SubscriptionInfo {
     modules: {
       id: number;
       name: string;
-      sections: string[];
+      sections: {
+        id: number;
+        key: string;
+        name: string;
+        max_records_limit: number;
+        usage_count: number;
+      };
     }[];
     offers: {
       name: string;
