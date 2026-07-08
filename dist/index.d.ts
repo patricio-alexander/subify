@@ -1,4 +1,5 @@
 interface SubscriptionInfo {
+    maintenance: boolean;
     subscribed: boolean;
     subscription: {
         id: number;
@@ -22,21 +23,7 @@ interface SubscriptionInfo {
                 name: string;
             }[];
         };
-        capabilities: {
-            id: number;
-            code: string;
-            name: string;
-            is_active: boolean;
-            section: {
-                id: number;
-                key: string;
-                name: string;
-            };
-            module: {
-                id: number;
-                name: string;
-            };
-        }[];
+        capabilities: Record<string, boolean>;
     };
 }
 
