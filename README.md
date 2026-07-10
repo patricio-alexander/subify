@@ -109,6 +109,31 @@ interface SubscriptionInfo {
 
 Activa una suscripción usando un license key.
 
+### `capture(typeKey, name, metadata)`
+
+Registra un evento en la plataforma.
+
+```ts
+interface CaptureEventInfo {
+  type: string;
+  captured: boolean;
+}
+```
+
+```ts
+const result = await Subscription.capture(
+  "customer_register",
+  "Registra usuario",
+  { screen: "Pantalla de clientes" },
+);
+
+if (result.error) {
+  console.error(result.error);
+} else {
+  console.log(result.data.captured); // true
+}
+```
+
 ## Variables de entorno
 
 | Variable | Descripción |
