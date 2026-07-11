@@ -3,6 +3,7 @@ import { SubscriptionInfo } from "./types/subcripcion-info";
 import { ExchangedLicense } from "./types/exchanged-license";
 import { UsageInfo } from "./types/usage-info";
 import { CaptureEventInfo } from "./types/capture-event";
+import { TrialModuleInfo } from "./types/trial-module-info";
 
 export interface SubcriptionSDKI {
   configure({ apiKey }: { apiKey: string }): void;
@@ -26,11 +27,16 @@ export interface SubcriptionSDKI {
     name: string,
     metadata: Record<string, any>,
   ): Promise<{ error: null | string; data: CaptureEventInfo | null }>;
+
+  startTrialModule(
+    moduleId: number,
+  ): Promise<{ error: null | string; data: TrialModuleInfo | null }>;
 }
 
 export class Subscription implements SubcriptionSDKI {
   private apikey: null | string = null;
-  private apiUrl = "https://aplicaciones.marianosamaniego.edu.ec/api";
+  private apiUrl =
+    "https://aplicaciones.marianosamaniego.edu.ec/gestor-proyectos-negocios/api";
 
   configure({ apiKey }: { apiKey: string }) {
     this.apikey = apiKey;
@@ -89,15 +95,12 @@ export class Subscription implements SubcriptionSDKI {
         throw new Error("No existe apiKey");
       }
 
-      const response = await fetch(
-        `${this.apiUrl}/api/sections/${section}/usage`,
-        {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${this.apikey}`,
-          },
+      const response = await fetch(`${this.apiUrl}/sections/${section}/usage`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${this.apikey}`,
         },
-      );
+      });
 
       const data = await response.json();
       if (!response.ok) {
@@ -132,6 +135,34 @@ export class Subscription implements SubcriptionSDKI {
         throw new Error(data.error);
       }
       return { error: null, data: data };
+    } catch (error) {
+      return { error: getErroMessage(error), data: null };
+    }
+  }
+
+  async startTrialModule(
+    moduleId: number,
+  ): Promise<{ error: null | string; data: TrialModuleInfo | null }> {
+    try {
+      if (!this.apikey) {
+        throw new Error("No existe apiKey");
+      }
+      const response = await fetch(
+        `${this.apiUrl}/modules/${moduleId}/start-trial`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${this.apikey}`,
+          },
+        },
+      );
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+
+      return { error: null, data };
     } catch (error) {
       return { error: getErroMessage(error), data: null };
     }

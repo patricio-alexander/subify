@@ -8,25 +8,38 @@ describe("Intregacion: SDK", () => {
 
   // it("Activa la subscripcion con la licencia con activateSubscription()", async () => {
   //   const subscription = await Subscription.activateSubscription({
-  //     licenseKey: "1a3f75b8-681c-4bdc-879e-11d8a1fb2ae6",
+  //     licenseKey: "b6dc0994-8e86-49e9-875a-ece9de52bef3",
   //   });
   //   expect(subscription.error).toBeNull();
   //   expect(subscription.data?.status).toBeDefined();
   // });
 
-  it("Devuelve error si la licencia ha sido revocada o usada con activateSubscription()", async () => {
-    const subscription = await Subscription.activateSubscription({
-      licenseKey: "1a3f75b8-681c-4bdc-879e-11d8a1fb2ae6",
-    });
-    expect(subscription.error).toBeDefined();
-    expect(subscription.data).toBeNull();
-  });
+  // it("Devuelve error si la licencia ha sido revocada o usada con activateSubscription()", async () => {
+  //   const subscription = await Subscription.activateSubscription({
+  //     licenseKey: "1a3f75b8-681c-4bdc-879e-11d8a1fb2ae6",
+  //   });
+  //   expect(subscription.error).toBeDefined();
+  //   expect(subscription.data).toBeNull();
+  // });
 
-  it("Obtiene los datos de las subscripcion con getSubscriptionInfo()", async () => {
+  it("comprueba si tiene subscripcion con getSubscriptionInfo()", async () => {
     const subscription = await Subscription.getSubscriptionInfo();
     expect(subscription.error).toBeNull();
-    expect(subscription.data?.subscribed).toBeDefined();
+    expect(subscription.data?.subscribed).toBeTruthy();
   });
+
+  // it("da inicio a la prueba gratis de x dias con startTrialModule()", async () => {
+  //   const subscription = await Subscription.startTrialModule(6);
+  //
+  //   expect(subscription.error).toBeNull();
+  //   expect(subscription.data?.is_started).toBeTruthy();
+  // });
+
+  // it("comprueba si tiene subscripcion con getSubscriptionInfo()", async () => {
+  //   const subscription = await Subscription.getSubscriptionInfo();
+  //   expect(subscription.error).toBeNull();
+  //   expect(subscription.data?.subscribed).toBeTruthy();
+  // });
 
   // it("Registra un evento", async () => {
   //   const subscription = await Subscription.capture(

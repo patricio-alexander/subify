@@ -17,6 +17,10 @@ export interface SubscriptionInfo {
         name: string;
         max_records_limit: number;
         usage_count: number;
+        is_trial: boolean;
+        start_trial: string;
+        limit_days_trial: string;
+        end_trial: string;
       };
     }[];
     offers: {
