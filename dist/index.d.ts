@@ -17,6 +17,10 @@ interface SubscriptionInfo {
                 name: string;
                 max_records_limit: number;
                 usage_count: number;
+                is_trial: boolean;
+                start_trial: string;
+                limit_days_trial: string;
+                end_trial: string;
             };
         }[];
         offers: {
@@ -54,6 +58,12 @@ interface CaptureEventInfo {
     captured: boolean;
 }
 
+interface TrialModuleInfo {
+    start_trial: string;
+    end_trial: string;
+    is_started: boolean;
+}
+
 interface SubcriptionSDKI {
     configure({ apiKey }: {
         apiKey: string;
@@ -77,6 +87,10 @@ interface SubcriptionSDKI {
     capture(typeKey: string, name: string, metadata: Record<string, any>): Promise<{
         error: null | string;
         data: CaptureEventInfo | null;
+    }>;
+    startTrialModule(moduleId: number): Promise<{
+        error: null | string;
+        data: TrialModuleInfo | null;
     }>;
 }
 declare class Subscription implements SubcriptionSDKI {
@@ -110,6 +124,10 @@ declare class Subscription implements SubcriptionSDKI {
     capture(typeKey: string, name: string, metadata: Record<string, any>): Promise<{
         error: null | string;
         data: CaptureEventInfo | null;
+    }>;
+    startTrialModule(moduleId: number): Promise<{
+        error: null | string;
+        data: TrialModuleInfo | null;
     }>;
 }
 

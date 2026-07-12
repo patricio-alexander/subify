@@ -7,7 +7,7 @@ function getErroMessage(error) {
 // src/Subscription.ts
 var Subscription = class {
   apikey = null;
-  apiUrl = "https://aplicaciones.marianosamaniego.edu.ec/api";
+  apiUrl = "https://aplicaciones.marianosamaniego.edu.ec/gestor-proyectos-negocios/api";
   configure({ apiKey }) {
     this.apikey = apiKey;
   }
@@ -56,15 +56,12 @@ var Subscription = class {
       if (!this.apikey) {
         throw new Error("No existe apiKey");
       }
-      const response = await fetch(
-        `${this.apiUrl}/api/sections/${section}/usage`,
-        {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${this.apikey}`
-          }
+      const response = await fetch(`${this.apiUrl}/sections/${section}/usage`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${this.apikey}`
         }
-      );
+      });
       const data = await response.json();
       if (!response.ok) {
         throw new Error(data.error);
@@ -86,6 +83,29 @@ var Subscription = class {
         },
         body: JSON.stringify({ type_key: typeKey, name, metadata })
       });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+      return { error: null, data };
+    } catch (error) {
+      return { error: getErroMessage(error), data: null };
+    }
+  }
+  async startTrialModule(moduleId) {
+    try {
+      if (!this.apikey) {
+        throw new Error("No existe apiKey");
+      }
+      const response = await fetch(
+        `${this.apiUrl}/modules/${moduleId}/start-trial`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${this.apikey}`
+          }
+        }
+      );
       const data = await response.json();
       if (!response.ok) {
         throw new Error(data.error);
