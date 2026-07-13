@@ -11,16 +11,19 @@ export interface SubscriptionInfo {
     modules: {
       id: number;
       name: string;
+      is_maintainer: boolean;
+      image_url: string;
+      is_trial: boolean;
+      start_trial: string;
+      limit_days_trial: string;
+      end_trial: string;
+
       sections: {
         id: number;
         key: string;
         name: string;
         max_records_limit: number;
         usage_count: number;
-        is_trial: boolean;
-        start_trial: string;
-        limit_days_trial: string;
-        end_trial: string;
       };
     }[];
     offers: {
