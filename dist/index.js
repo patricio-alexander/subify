@@ -7,7 +7,7 @@ function getErroMessage(error) {
 // src/Subscription.ts
 var Subscription = class {
   apikey = null;
-  apiUrl = "https://aplicaciones.marianosamaniego.edu.ec/gestor-proyectos-negocios/api";
+  apiUrl = "http://localhost:3000/gestor-proyectos-negocios/api";
   configure({ apiKey }) {
     this.apikey = apiKey;
   }
