@@ -174,6 +174,40 @@ if (result.error) {
 }
 ```
 
+### `getPlans()`
+
+Obtiene los planes disponibles con sus precios y módulos.
+
+```ts
+interface Price {
+  prices: number;
+  period: "MONTHLY" | "ANNUALLY";
+}
+
+interface Module {
+  name: string;
+  description: string;
+}
+
+interface PlanInfo {
+  name: string;
+  prices: Price[];
+  modules: Module[] | null;
+}
+```
+
+```ts
+const result = await Subify.getPlans();
+
+if (result.error) {
+  console.error(result.error);
+} else {
+  console.log(result.data.name);       // "Plan Básico"
+  console.log(result.data.prices);     // [{ prices: 9.99, period: "MONTHLY" }, ...]
+  console.log(result.data.modules);    // [{ name: "Módulo X", description: "..." }, ...]
+}
+```
+
 ## Variables de entorno
 
 | Variable | Descripción |
