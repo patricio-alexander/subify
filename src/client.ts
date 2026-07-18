@@ -82,10 +82,10 @@ export function createRaptorClient(
 
       return {
         ok: true,
-        event_id: (data.event_id ?? data.id) as string | number,
+        event_id: data.event_id as string | number,
         type_key:
           typeof data.type_key === "string" ? data.type_key : payload.type_key,
-        event: data.event ?? data,
+        event: data.event,
       };
     } catch (error) {
       return {

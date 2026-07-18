@@ -21,6 +21,7 @@ describe("createRaptorClient", () => {
       ok: true,
       status: 201,
       json: async () => ({
+        ok: true,
         event_id: 42,
         type_key: "order.created",
         event: { id: 42 },
@@ -64,13 +65,13 @@ describe("createRaptorClient", () => {
     });
   });
 
-  it("returns ok:false with status on HTTP errors", async () => {
+  it("returns ok:false with error on HTTP 500", async () => {
     vi.stubGlobal(
       "fetch",
       vi.fn().mockResolvedValue({
         ok: false,
-        status: 401,
-        json: async () => ({ error: "Unauthorized" }),
+        status: 500,
+        json: async () => ({ error: "Failed to persist event" }),
       }),
     );
 
@@ -87,8 +88,8 @@ describe("createRaptorClient", () => {
 
     expect(result).toEqual({
       ok: false,
-      error: "Unauthorized",
-      status: 401,
+      error: "Failed to persist event",
+      status: 500,
     });
   });
 
@@ -96,7 +97,12 @@ describe("createRaptorClient", () => {
     const fetchMock = vi.fn().mockResolvedValue({
       ok: true,
       status: 201,
-      json: async () => ({ event_id: 1, type_key: "x", event: {} }),
+      json: async () => ({
+        ok: true,
+        event_id: 1,
+        type_key: "x",
+        event: { id: 1 },
+      }),
     });
     vi.stubGlobal("fetch", fetchMock);
 
